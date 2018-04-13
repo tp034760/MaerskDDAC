@@ -1,0 +1,42 @@
+﻿@model Maersk_DDAC.Models.BookingsModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Book</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.HiddenFor(model => model.SelectedSchedule.ScheduleID)
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red">@ViewBag.Error</p>
+    }
+    <div class="form-group">
+        @Html.LabelFor(model => model.Good.GoodName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+
+            @Html.DropDownListFor(m => m.GoodID, Model.GoodsList, "--Select One--", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Customer.CustomerID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Book" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+

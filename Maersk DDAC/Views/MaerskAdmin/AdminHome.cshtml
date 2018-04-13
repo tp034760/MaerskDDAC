@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Welcome, Admin!</h2>
+
+@if ((string)TempData["shipbooked"] == "true")
+{
+    @Html.Raw(TempData["msg"]);
+}

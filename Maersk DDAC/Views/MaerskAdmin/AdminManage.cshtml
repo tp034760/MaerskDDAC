@@ -1,0 +1,87 @@
+﻿@model Maersk_DDAC.Models.SelectViewModel
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <h2>Add Shipment</h2>
+    <div style="height:30px"></div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Ship: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+
+                @Html.DropDownListFor(m => m.ShipID, Model.ShipList, "--Select One--", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Departure Dock: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.DropDownListFor(m => m.DepartureID, Model.DockList, "--Select One--", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Destination Dock: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.DropDownListFor(m => m.ArrivalID, Model.DockList, "--Select One--", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Space Allocation: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.EditorFor(m => m.Schedule.BayLeft, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Departure Time: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.TextBoxFor(model => model.Schedule.DepartureTime, new { @class = "form-control", @id = "txtStartTime", @name = "StartTime" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Arrival Time: ", new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ">
+                @Html.TextBoxFor(model => model.Schedule.ArrivalTime, new { @class = "form-control", @id = "txtEndTime", @name = "EndTime" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="submit" type="submit" value="Add Shipment" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<style>
+    .form-row {
+        height: auto;
+        margin-right: -15px;
+        margin-left: -15px;
+        margin-bottom: 20px;
+    }
+</style>
+
+@section scripts {
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('#txtStartTime').datetimepicker({ format: 'MM/DD/YYYY h:mm a' });
+            $('#txtEndTime').datetimepicker({ format: 'MM/DD/YYYY h:mm a' });
+
+            $("#txtStartTime").on("dp.change", function (e) {
+                $('#txtEndTime').data("DateTimePicker").minDate(e.date);
+            });
+            $("#txtEndTime").on("dp.change", function (e) {
+                $('#txtStartTime').data("DateTimePicker").maxDate(e.date);
+            });
+        });
+    </script>
+}

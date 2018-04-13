@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Maersk_DDAC.Models.Order>
+@{
+    Layout = "~/Views/Shared/_AgentLayout.cshtml";
+}
+<h2>View Bookings</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2">
+                Customer ID:
+            </div>
+            <div class="col-md-10">
+                @Html.TextBox("CustomerID")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                From:
+            </div>
+            <div class="col-md-10">
+                @Html.TextBox("From", new { @class = "form-control", @id = "From", @name = "From" }) 
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                To:
+            </div>
+            <div class="col-md-10">
+                @Html.TextBox("To", new { @class = "form-control", @id = "To", @name = "From" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Filter" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Ship.ShipName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Good.GoodName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Arrival.DockName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Departure.DockName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeBooked)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.Ship.ShipName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Good.GoodName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.Arrival.DockName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Schedule.Departure.DockName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeBooked)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section scripts {
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('#From').datetimepicker({ format: 'MM/DD/YYYY h:mm a' });
+            $('#To').datetimepicker({ format: 'MM/DD/YYYY h:mm a' });
+
+            $("#From").on("dp.change", function (e) {
+                $('#To').data("DateTimePicker").minDate(e.date);
+            });
+            $("#To").on("dp.change", function (e) {
+                $('#From').data("DateTimePicker").maxDate(e.date);
+            });
+        });
+    </script>
+}

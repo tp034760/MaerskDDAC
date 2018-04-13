@@ -1,0 +1,71 @@
+﻿@model Maersk_DDAC.Models.BookingsModel
+@{
+    Layout = "~/Views/Shared/_AgentLayout.cshtml";
+}
+<h2>Book Schedule</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().ScheduleID))
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().Ship.ShipName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().ArrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().Departure.DockName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().Arrival.DockName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.First().BayLeft)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Schedule)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduleID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ship.ShipName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departure.DockName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Arrival.DockName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BayLeft)
+            </td>
+            <td>
+                @Html.ActionLink("Book", "Book", new { id = item.ScheduleID })
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+@if ((string)TempData["fullbook"] == "true")
+{
+    @Html.Raw(TempData["msg"]);
+}
+
